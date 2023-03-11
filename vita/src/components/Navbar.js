@@ -23,9 +23,13 @@ const Navbar = () => {
 			case '/projects':
 				idx = 1;
 				break;
-			case '/about':
+			case '/skills':
 				idx = 2;
 				break;
+			case '/about':
+				idx = 3;
+				break;
+			
 			default:
 		}
 
@@ -71,8 +75,15 @@ const Navbar = () => {
 								{...(activeLink === 2
 									? activeAttrs
 									: inactiveAttrs)}
-								to="/contact">
-								Contact
+								to="/skills">
+								Skills
+							</Link>
+							<Link
+								{...(activeLink === 3
+									? activeAttrs
+									: inactiveAttrs)}
+								to="/about">
+								About
 							</Link>
 							<a
 								className="bi bi-linkedin"
