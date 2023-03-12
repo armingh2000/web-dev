@@ -1,4 +1,11 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	pressButton,
+	backspace,
+	clear,
+	getResult,
+} from '../features/calculator/calculatorSlice';
 
 const Button = (props) => {
 	const button = props.button;
@@ -10,12 +17,34 @@ const Button = (props) => {
 	const divStyle = spanList.includes(button) ? spanStyle : butStyle;
 
 	const pStyle =
-		shareStyle +
-		(spanList.includes(button) ? 'rounded-5' : 'rounded-5');
+		shareStyle + (spanList.includes(button) ? 'rounded-5' : 'rounded-5');
+
+	const dispatch = useDispatch();
+	const seq = useSelector((state) => state.calculator.sequence);
+	const getAction = (button) => {
+		if (seq == 'Error' && button != 'AC') return null;
+
+		switch (button) {
+			case 'AC':
+				return clear();
+			case 'C':
+				return backspace();
+			case '=':
+				return getResult();
+			default:
+				return pressButton(button);
+		}
+	};
+	const action = getAction(button);
 
 	return (
 		<div className={divStyle}>
-			<p className={pStyle} style={{'font-size': '3vmin'}}> {button} </p>
+			<p
+				onClick={() => dispatch(action)}
+				className={pStyle}
+				style={{ 'font-size': '3vmin' }}>
+				{button}
+			</p>
 		</div>
 	);
 };
